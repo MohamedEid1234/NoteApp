@@ -35,10 +35,12 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import er.codeforegypt.noteappmvvm.core.util.TestTags
 import er.codeforegypt.noteappmvvm.feature_note.domain.model.Note
 import er.codeforegypt.noteappmvvm.feature_note.presentation.add_edit_note.AddEditNoteEvent
 import er.codeforegypt.noteappmvvm.feature_note.presentation.add_edit_note.AddEditNoteViewModel
 import er.codeforegypt.noteappmvvm.feature_note.presentation.add_edit_note.UiEvent
+import er.codeforegypt.noteappmvvm.feature_note.presentation.util.Screen
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -74,9 +76,10 @@ fun AddEditNoteScreen(
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.onEvent(AddEditNoteEvent.SaveNote) },
+            FloatingActionButton(onClick = { viewModel.onEvent(AddEditNoteEvent.SaveNote)
+                                           navController.navigate(route = Screen.NotesScreen.route)},
                 backgroundColor = MaterialTheme.colorScheme.primary) {
-                Icon(imageVector = Icons.Default.Save, contentDescription = "save note")
+                Icon(imageVector = Icons.Default.Save, contentDescription = "Save")
             }
 
         },
@@ -125,7 +128,8 @@ fun AddEditNoteScreen(
                 onValueChange ={viewModel.onEvent(AddEditNoteEvent.EnteredTitle(it))},
                 onFocusChange = {viewModel.onEvent(AddEditNoteEvent.ChangeTitleFocus(it))},
                 singleLine = true,
-                textStyle = MaterialTheme.typography.bodyLarge)
+                textStyle = MaterialTheme.typography.bodyLarge,
+                testTag = TestTags.TITLE_TEXT_FIELD)
             Spacer(modifier = Modifier.height(16.dp))
             TransparentHintTextField(
                 text = contentState.text,
@@ -134,7 +138,8 @@ fun AddEditNoteScreen(
                 onValueChange ={viewModel.onEvent(AddEditNoteEvent.EnteredContent(it))},
                 onFocusChange = {viewModel.onEvent(AddEditNoteEvent.ChangeContentFocus(it))},
                 textStyle = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.fillMaxHeight())
+                modifier = Modifier.fillMaxHeight(),
+                testTag = TestTags.CONTENT_TEXT_FIELD)
 
         }
 

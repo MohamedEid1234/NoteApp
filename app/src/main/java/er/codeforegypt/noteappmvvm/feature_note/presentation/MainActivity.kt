@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NoteAppMvvMTheme {
                 Surface(
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.background,
 
                 ) {
                     val navController = rememberNavController()
